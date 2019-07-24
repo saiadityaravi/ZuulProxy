@@ -1,0 +1,155 @@
+server:
+  address: 0.0.0.0
+  port: '9411'
+  servlet:
+    contextPath: /
+  ssl:
+    enabled: 'true'
+    key-store: /u01/app/careUtilizationPlatform/resources/certFiles/careutilizationplatform.caremore.com.jks
+    key-store-password: password
+    key-password: password
+app:
+  source: cup
+  key: 123
+  secret: 1234
+jwt:
+  token:
+    access_token:
+      validity: '1800'
+    refresh_token:
+      validity: '28800'
+  certificate:
+    store:
+      file: classpath:/signjwt.jks
+      password: cFdIU3BrZWk=
+    key:
+      alias: cupjwt
+      password: SndUUEthd3M=
+db:
+  host: CA47DWVSQL007
+  name: CUP
+  username: 
+  password: 
+wso2:
+  host: 10.41.125.31:8245
+  url:
+    token: /token
+  client:
+    key: MV4WO5OLZIiAbefbBUCi0qkM2B8a
+    secret: _2Xd8PTWkKqpYj6oDC8OZVcdkRoa
+cue:
+  application:
+    key: C9ABE61C-D842-4E76-ADDB-C486D90AFDFA
+spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 300MB
+zuul:
+  sslHostnameValidationEnabled: 'false'
+  host:
+    socket-timeout-millis: '90000'
+  routes:
+    cupauth:
+      path: /auth/**
+      sensitiveHeaders: null
+      url: https://localhost:9401/cupauth
+    cup:
+      path: /cup/**
+      sensitiveHeaders: Authorization,USERNAME
+      url: https://localhost:4414/cup
+    cupmsg:
+      path: /cupmsg/**
+      sensitiveHeaders: Authorization,USERNAME
+      url: https://localhost:5414/msg
+    edh:
+      path: /edh/**
+      url: https://10.41.125.31:8245/edh
+    edh2:
+      path: /edh2/**
+      url: https://10.41.125.31:8245/edh2
+    edh3:
+      path: /edh3/**
+      url: https://10.41.125.31:8245/edh3
+    NexGen:
+      path: /NexGen/**
+      url: https://10.41.125.31:8245/NexGen
+    eds:
+      path: /eds/**
+      url: https://10.41.125.31:8245/eds
+    cue:
+      path: /cue/**
+      sensitiveHeaders: Cookie,Set-Cookie,Authorization
+      ignoredHeaders: X-CUE-ApplicationKey
+      url: https://10.41.125.31:8245/cue
+    patientportalmsg:
+      path: /patientportalmsg/**
+      sensitiveHeaders: Authorization,USERNAME
+      url: https://10.41.125.31:8245/patientportalmsg
+    providerportalmsg:
+      path: /providerportalmsg/**
+      sensitiveHeaders: Authorization,USERNAME
+      url: https://10.41.125.31:8245/providerportalmsg
+ribbon:
+  eureka:
+    enabled: 'false'
+authconfig:
+  unprotected:
+  - /auth/oauth/token
+  allow:
+    admin:
+    - /cup/api/v1.0/admin.+
+    all:
+    - /cup/api/v1.0/attachments.+
+    - /cup/api/v1.0/authaudit.+
+    - /cup/api/v1.0/authexport.+
+    - /cup/api/v1.0/authletterstatus.+
+    - /cup/api/v1.0/authorization.+
+    - /cup/api/v1.0/authreason.+
+    - /cup/api/v1.0/authreasons.+
+    - /cup/api/v1.0/authstatus.+
+    - /cup/api/v1.0/client.+
+    - /cup/api/v1.0/codes.+
+    - /cup/api/v1.0/denialreason.+
+    - /cup/api/v1.0/external.+
+    - /cup/api/v1.0/externalusers.+
+    - /cup/api/v1.0/fileupload.+
+    - /cup/api/v1.0/general.+
+    - /cup/api/v1.0/helpdesk.+
+    - /cup/api/v1.0/insurance.+
+    - /cup/api/v1.0/lookup.+
+    - /cup/api/v1.0/member.+
+    - /cup/api/v1.0/memberEligibility.+
+    - /cup/api/v1.0/preferredcodes.+
+    - /cup/api/v1.0/provider.+
+    - /cup/api/v1.0/provideraccess.+
+    - /cup/api/v1.0/supplemental.+
+    - /cup/api/v1.0/template.+
+    - /cup/api/v1.0/user.+
+    - /cup/api/v1.0/useraccesspermission.+
+    - /cup/api/v1.0/userauthupdatelock.+
+    - /cup/api/v1.0/users.+
+    - /cup/api/v1.0/worklist.+
+    - /auth/.+
+    - /edh/.+
+    - /eds/.+
+    - /cue/.+
+    - /nexgen/.+
+    - /cupmsg/.+
+    - /patientportalmsg/.+
+    - /providerportalmsg/.+
+  header:
+    username:
+    - /cup/.+
+    - /cupmsg/.+
+    - /patientportalmsg/.+
+    - /providerportalmsg/.+
+    wso2token:
+    - /edh/.+
+    - /nexgen/.+
+    - /eds/.+
+    - /cue/.+
+    - /patientportalmsg/.+
+    - /providerportalmsg/.+
+    cue: 
+    - /cue/.+
